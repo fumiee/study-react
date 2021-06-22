@@ -6,7 +6,6 @@ import { Header } from "src/components/Header";
 import { useBgPink } from "src/hooks/useBgPink";
 
 export default function Home(props) {
-  console.log(props);
   const {
     count,
     isShow,
