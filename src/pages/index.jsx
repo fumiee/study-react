@@ -3,52 +3,14 @@ import styles from "src/styles/Home.module.css";
 import { Footer } from "src/components/Footer";
 import { Main } from "src/components/main";
 import { Header } from "src/components/Header";
-import { useCallback, useEffect, useState } from "react";
+import { useCounter } from "src/hooks/useCounter";
+import { useInputArray } from "src/hooks/useInputArray";
+import { useBgPink } from "src/hooks/useBgPink";
 
 export default function Home() {
-  const [count, setCount] = useState(1);
-  const [text, setText] = useState("");
-  const [isShow, setIsShow] = useState(true);
-  const [array, setArray] = useState([]);
-
-  const handleClick = useCallback(
-    (e) => {
-      if (count < 10) {
-        setCount((prevCount) => prevCount + 1);
-      }
-    },
-    [count]
-  );
-
-  const handleChange = useCallback((e) => {
-    if (e.target.value.length > 5) {
-      alert("５文字いないにしてください");
-      return;
-    }
-    setText(e.target.value.trim());
-  }, []);
-
-  const handleDisplay = useCallback(() => {
-    setIsShow((prevIsShow) => !prevIsShow); //アロー関数１行の場合はreturnなしでok
-  }, []);
-
-  const handleAdd = useCallback(() => {
-    setArray((prevArray) => {
-      if (prevArray.some((item) => item === text)) {
-        alert("同じ要素がすでにあります");
-        return prevArray;
-      }
-      return [...prevArray, text];
-    });
-  }, [text]);
-
-  useEffect(() => {
-    document.body.style.backgroundColor = "pink";
-    return () => {
-      document.body.style.backgroundColor = "";
-    };
-  }, [count]);
-
+  const { count, isShow, handleClick, handleDisplay } = useCounter();
+  const { text, array, handleChange, handleAdd } = useInputArray();
+  useBgPink();
   return (
     <div className={styles.container}>
       <Head>
