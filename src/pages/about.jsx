@@ -3,7 +3,6 @@ import styles from "src/styles/Home.module.css";
 import { Footer } from "src/components/Footer";
 import { Main } from "src/components/main";
 import { Header } from "src/components/Header";
-import { useBgPink } from "src/hooks/useBgPink";
 
 export default function About(props) {
   const {
@@ -16,7 +15,6 @@ export default function About(props) {
     handleChange,
     handleAdd,
   } = props;
-  useBgPink();
   return (
     <div className={styles.container}>
       <Head>
