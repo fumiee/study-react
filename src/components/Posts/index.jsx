@@ -1,42 +1,53 @@
 import { useCallback, useEffect, useState } from "react";
-// import { api } from "src/api.jsx";
-// import InfiniteScroll from "react-infinite-scroller";
 
 export const Posts = () => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [state, setState] = useState({
+    data: [],
+    loading: true,
+    error: null,
+  });
 
   const getPosts = useCallback(async () => {
     try {
-      const res = await fetch("https://jsonplaceholder.typicode.com/posts");
+      const res = await fetch("https://jsonplaceholder.typicode.com/postss");
       if (!res.ok) {
         throw new Error("エラーが発生したため、データの取得に失敗しました");
       }
       const json = await res.json();
-      setPosts(json);
+      setState((prevState) => {
+        return {
+          ...prevState, //前回のstateの中身を展開
+          data: json, //上書きで変更
+          loading: false,
+        };
+      });
     } catch (error) {
-      setError(error);
+      setState((prevState) => {
+        return {
+          ...prevState,
+          loading: false,
+          error,
+        };
+      });
     }
-    setLoading(false);
   }, []);
   useEffect(() => {
     getPosts();
   }, [getPosts]);
 
-  if (loading) {
+  if (state.loading) {
     return <div>ローディング中</div>;
   }
-  if (error) {
-    return <div>{error.message}</div>;
+  if (state.error) {
+    return <div>{state.error.message}</div>;
   }
-  if (posts.length === 0) {
+  if (state.data.length === 0) {
     return <div>データがありません</div>;
   }
 
   return (
     <ol>
-      {posts.map((post) => {
+      {state.data.map((post) => {
         return <li key={post.id}>{post.title}</li>;
       })}
     </ol>
