@@ -14,7 +14,6 @@ const Home = () => {
     const res = await fetch(
       `https://jsonplaceholder.typicode.com/posts/${page}`
     );
-    // console.log(res.status);
     const data = await res.json();
 
     if (res.status === 404) {
@@ -25,7 +24,6 @@ const Home = () => {
     //取得データをリストに追加
     setPosts([...posts, data]);
     setPage((page) => page + 1);
-    console.log(data);
   }, [page, posts]);
 
   useEffect(() => {
