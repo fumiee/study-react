@@ -2,8 +2,6 @@ import Head from "next/head";
 import styles from "src/styles/Home.module.css";
 import { Header } from "src/components/Header";
 import { useCallback, useEffect, useState } from "react";
-// import { api } from "src/api.jsx";
-// import InfiniteScroll from "react-infinite-scroller";
 
 const Home = () => {
   const [posts, setPosts] = useState([]); //表示するデータ
